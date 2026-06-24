@@ -3,813 +3,1132 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SYNERGY AI — Startup Intelligence Platform</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<title>Synergy AI — Startup Validation Engine</title>
 <style>
-:root{
-  --bg:#050508;--bg2:#0a0a10;--bg3:#0f0f18;
-  --glass:rgba(255,255,255,0.04);--glass2:rgba(255,255,255,0.07);
-  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.15);
-  --gold:#f5c842;--gold2:#e8a020;--blue:#4f8ef7;--cyan:#00d4ff;
-  --purple:#8b5cf6;--green:#10d474;--red:#ff4757;
-  --text:#e8e8f0;--muted:#7878a0;
-  --font:'Inter',system-ui,sans-serif;
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:hidden}
-a{color:inherit;text-decoration:none}
+  :root{
+    --ink:#0b0d12;
+    --ink-soft:#3a3f4b;
+    --muted:#6b7280;
+    --line:#e7e9ee;
+    --bg:#ffffff;
+    --bg-soft:#f7f8fa;
+    --indigo:#4f46e5;
+    --indigo-deep:#3730a3;
+    --violet:#7c3aed;
+    --cyan:#06b6d4;
+    --green:#10b981;
+    --amber:#f59e0b;
+    --red:#ef4444;
+    --radius-lg:20px;
+    --radius-md:14px;
+    --radius-sm:10px;
+    --shadow-sm: 0 1px 2px rgba(16,24,40,.04), 0 1px 1px rgba(16,24,40,.02);
+    --shadow-md: 0 8px 24px rgba(16,24,40,.08), 0 2px 6px rgba(16,24,40,.04);
+    --shadow-lg: 0 24px 60px rgba(16,24,40,.12), 0 6px 16px rgba(16,24,40,.06);
+    --ease: cubic-bezier(.22,1,.36,1);
+  }
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 60px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.logo{font-size:20px;font-weight:700;letter-spacing:2px;background:linear-gradient(135deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.nav-links{display:flex;gap:32px;font-size:14px;color:var(--muted)}
-.nav-links a:hover{color:var(--text);transition:.2s}
-.nav-cta{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:.2s}
-.nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(245,200,66,0.3)}
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
 
-/* HERO */
-#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 20px 60px;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;z-index:0}
-canvas#particles{position:absolute;inset:0;width:100%;height:100%}
-.glow-orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.15}
-.orb1{width:600px;height:600px;background:var(--purple);top:-200px;left:-200px}
-.orb2{width:500px;height:500px;background:var(--blue);bottom:-100px;right:-100px}
-.orb3{width:300px;height:300px;background:var(--gold);top:50%;left:50%;transform:translate(-50%,-50%)}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--glass);border:1px solid var(--border2);border-radius:100px;padding:8px 18px;font-size:13px;color:var(--gold);margin-bottom:32px;position:relative;z-index:1}
-.hero-badge span{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-h1{font-size:clamp(48px,7vw,88px);font-weight:800;line-height:1.05;letter-spacing:-2px;position:relative;z-index:1;max-width:900px}
-.grad-text{background:linear-gradient(135deg,#fff 30%,var(--gold) 60%,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--muted);max-width:600px;line-height:1.7;margin:24px 0 48px;position:relative;z-index:1}
-.hero-btns{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1}
-.btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;padding:16px 40px;border-radius:10px;font-size:16px;font-weight:700;border:none;cursor:pointer;transition:.3s;letter-spacing:.5px}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(245,200,66,0.4)}
-.btn-secondary{background:var(--glass);border:1px solid var(--border2);color:var(--text);padding:16px 40px;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;transition:.3s;backdrop-filter:blur(10px)}
-.btn-secondary:hover{background:var(--glass2);transform:translateY(-2px)}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+  }
 
-/* METRICS BAR */
-.metrics-bar{display:flex;gap:40px;margin-top:80px;position:relative;z-index:1;flex-wrap:wrap;justify-content:center}
-.metric{text-align:center}
-.metric-val{font-size:32px;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.metric-label{font-size:12px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+  a{color:inherit; text-decoration:none;}
+  ::selection{background:#c7d2fe;}
 
-/* SECTION SHARED */
-section{padding:100px 60px;max-width:1400px;margin:0 auto}
-.section-tag{display:inline-block;font-size:12px;text-transform:uppercase;letter-spacing:2px;color:var(--gold);background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.2);padding:6px 16px;border-radius:100px;margin-bottom:20px}
-.section-title{font-size:clamp(36px,4vw,56px);font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:16px}
-.section-sub{font-size:18px;color:var(--muted);max-width:600px;line-height:1.7}
+  /* ---------- Layout shells ---------- */
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
 
-/* FEATURES GRID */
-.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px;margin-top:64px}
-.feature-card{background:var(--glass);border:1px solid var(--border);border-radius:20px;padding:36px;transition:.3s;position:relative;overflow:hidden}
-.feature-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(79,142,247,0.05),transparent);opacity:0;transition:.3s}
-.feature-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:0 24px 48px rgba(0,0,0,.4)}
-.feature-card:hover::before{opacity:1}
-.feat-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px}
-.feat-title{font-size:20px;font-weight:700;margin-bottom:12px}
-.feat-desc{font-size:15px;color:var(--muted);line-height:1.7}
-.feat-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
-.tag{font-size:11px;padding:4px 10px;border-radius:100px;background:var(--glass2);border:1px solid var(--border);color:var(--muted)}
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(255,255,255,.78);
+    backdrop-filter:blur(16px) saturate(180%);
+    -webkit-backdrop-filter:blur(16px) saturate(180%);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:72px;
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:800;
+    font-size:18px;
+    letter-spacing:-0.02em;
+  }
+  .logo-mark{
+    width:34px;height:34px;
+    border-radius:10px;
+    background:linear-gradient(135deg, var(--indigo) 0%, var(--violet) 55%, var(--cyan) 100%);
+    position:relative;
+    box-shadow: var(--shadow-sm);
+  }
+  .logo-mark::after{
+    content:"";
+    position:absolute; inset:8px;
+    border-radius:5px;
+    background:#fff;
+    opacity:.92;
+    mask: radial-gradient(circle at 30% 30%, transparent 0 3px, #fff 3px);
+  }
+  .logo span.brand{color:var(--ink);}
+  .logo span.sub{
+    font-weight:600;
+    color:var(--muted);
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    margin-left:2px;
+    padding-top:2px;
+  }
 
-/* ANALYZER */
-#analyzer{padding:100px 60px}
-.analyzer-wrap{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
-.analyzer-form{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:48px}
-.form-title{font-size:28px;font-weight:700;margin-bottom:32px}
-.form-group{margin-bottom:24px}
-label{display:block;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
-input,textarea,select{width:100%;background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:14px 16px;color:var(--text);font-size:15px;font-family:var(--font);transition:.2s;outline:none}
-input:focus,textarea:focus,select:focus{border-color:var(--gold);background:var(--glass2)}
-textarea{min-height:100px;resize:vertical}
-select option{background:var(--bg2)}
-.analyze-btn{width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;padding:16px;border-radius:10px;font-size:16px;font-weight:700;border:none;cursor:pointer;margin-top:8px;transition:.3s}
-.analyze-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(245,200,66,0.3)}
-.analyze-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+  nav.links{
+    display:flex;
+    gap:36px;
+    font-size:14.5px;
+    font-weight:560;
+    color:var(--ink-soft);
+  }
+  nav.links a{
+    position:relative;
+    padding:6px 0;
+    transition:color .25s var(--ease);
+  }
+  nav.links a::after{
+    content:"";
+    position:absolute;
+    left:0; right:100%;
+    bottom:0;
+    height:2px;
+    background:linear-gradient(90deg,var(--indigo),var(--violet));
+    border-radius:2px;
+    transition:right .3s var(--ease);
+  }
+  nav.links a:hover{color:var(--ink);}
+  nav.links a:hover::after{right:0;}
 
-/* RESULTS */
-.results-panel{opacity:0;transition:.5s}
-.results-panel.show{opacity:1}
-.result-scores{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
-.score-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:24px;text-align:center}
-.score-ring{position:relative;width:80px;height:80px;margin:0 auto 12px}
-.score-ring svg{transform:rotate(-90deg)}
-.score-ring .track{fill:none;stroke:var(--border2);stroke-width:6}
-.score-ring .fill{fill:none;stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 1.5s ease}
-.score-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800}
-.score-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
-.ai-analysis{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px}
-.ai-header{display:flex;align-items:center;gap:10px;margin-bottom:16px}
-.ai-dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
-.ai-text{font-size:15px;line-height:1.8;color:var(--muted)}
-.ai-text strong{color:var(--text)}
-.typing{display:inline-block;width:2px;height:16px;background:var(--gold);animation:blink .8s infinite;vertical-align:middle}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-weight:650;
+    font-size:14.5px;
+    cursor:pointer;
+    border:none;
+    border-radius:999px;
+    transition:transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+  }
+  .btn-primary{
+    background:linear-gradient(135deg, var(--indigo) 0%, var(--indigo-deep) 100%);
+    color:#fff;
+    padding:11px 22px;
+    box-shadow:0 6px 16px rgba(79,70,229,.28);
+  }
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 22px rgba(79,70,229,.36);}
+  .btn-primary:active{transform:translateY(0);}
 
-/* PRICING */
-.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:64px}
-.plan-card{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:40px;position:relative;transition:.3s}
-.plan-card.featured{border-color:var(--gold);background:linear-gradient(135deg,rgba(245,200,66,0.05),var(--bg2))}
-.plan-card:hover{transform:translateY(-4px)}
-.plan-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;font-size:11px;font-weight:700;padding:4px 16px;border-radius:100px;text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
-.plan-name{font-size:20px;font-weight:700;margin-bottom:8px}
-.plan-price{font-size:42px;font-weight:800;margin:16px 0;background:linear-gradient(135deg,var(--text),var(--muted));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.plan-price span{font-size:16px;font-weight:400;color:var(--muted)}
-.plan-desc{font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.6}
-.plan-features{list-style:none;margin-bottom:32px}
-.plan-features li{padding:10px 0;font-size:14px;color:var(--muted);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
-.plan-features li::before{content:'✓';color:var(--green);font-weight:700;font-size:12px}
-.plan-btn{width:100%;padding:14px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:.3s;border:1px solid var(--border2);background:var(--glass);color:var(--text)}
-.plan-btn.featured{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none}
-.plan-btn:hover{transform:translateY(-2px)}
+  .btn-ghost{
+    background:var(--bg-soft);
+    color:var(--ink);
+    padding:10px 20px;
+    border:1px solid var(--line);
+  }
+  .btn-ghost:hover{background:#eef0f4; transform:translateY(-1px);}
 
-/* DASHBOARD PREVIEW */
-.dash-preview{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:40px;margin-top:64px;overflow:hidden}
-.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
-.dash-title{font-size:22px;font-weight:700}
-.dash-live{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--green)}
-.widgets{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:32px}
-.widget{background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:20px}
-.widget-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
-.widget-val{font-size:28px;font-weight:800}
-.widget-delta{font-size:12px;margin-top:4px}
-.delta-up{color:var(--green)}
-.delta-down{color:var(--red)}
-.chart-area{background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:24px;height:220px;position:relative;overflow:hidden}
-.chart-label{font-size:13px;color:var(--muted);margin-bottom:16px}
-svg.sparkline{width:100%;height:140px}
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:120px 0 90px;
+    text-align:center;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-280px; left:50%;
+    width:1100px; height:760px;
+    transform:translateX(-50%);
+    background:
+      radial-gradient(closest-side, rgba(124,58,237,.16), transparent 70%),
+      radial-gradient(closest-side at 30% 60%, rgba(79,70,229,.14), transparent 65%),
+      radial-gradient(closest-side at 70% 60%, rgba(6,182,212,.12), transparent 65%);
+    filter:blur(8px);
+    z-index:0;
+  }
+  .eyebrow{
+    position:relative; z-index:1;
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:13px; font-weight:650;
+    color:var(--indigo-deep);
+    background:#eef0ff;
+    border:1px solid #e0e3ff;
+    padding:7px 16px;
+    border-radius:999px;
+    margin-bottom:28px;
+    opacity:0; animation:fadeUp .7s var(--ease) .05s forwards;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--green); box-shadow:0 0 0 3px rgba(16,185,129,.18);}
 
-/* FOOTER */
-footer{background:var(--bg2);border-top:1px solid var(--border);padding:60px;text-align:center}
-.footer-logo{font-size:24px;font-weight:800;letter-spacing:2px;background:linear-gradient(135deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px}
-.footer-links{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
-.footer-links a{font-size:14px;color:var(--muted);transition:.2s}
-.footer-links a:hover{color:var(--text)}
-.footer-copy{font-size:13px;color:var(--muted)}
+  .hero h1{
+    position:relative; z-index:1;
+    font-size:clamp(40px, 6vw, 76px);
+    line-height:1.04;
+    letter-spacing:-0.025em;
+    font-weight:800;
+    margin:0 0 22px;
+    background:linear-gradient(180deg, #0b0d12 30%, #3a3f4b 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    opacity:0; animation:fadeUp .8s var(--ease) .12s forwards;
+  }
+  .hero h1 .grad{
+    background:linear-gradient(120deg, var(--indigo) 0%, var(--violet) 50%, var(--cyan) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.sub{
+    position:relative; z-index:1;
+    max-width:640px;
+    margin:0 auto 40px;
+    font-size:19px;
+    line-height:1.6;
+    color:var(--muted);
+    font-weight:450;
+    opacity:0; animation:fadeUp .8s var(--ease) .22s forwards;
+  }
+  .hero-stats{
+    position:relative; z-index:1;
+    display:flex; gap:48px; justify-content:center;
+    opacity:0; animation:fadeUp .8s var(--ease) .32s forwards;
+  }
+  .hero-stats div{text-align:left;}
+  .hero-stats .num{font-size:24px; font-weight:800; letter-spacing:-0.02em;}
+  .hero-stats .lab{font-size:12.5px; color:var(--muted); font-weight:560;}
 
-/* TOAST */
-.toast{position:fixed;bottom:32px;right:32px;background:var(--bg3);border:1px solid var(--border2);border-radius:12px;padding:16px 24px;z-index:999;transform:translateY(100px);opacity:0;transition:.4s;font-size:14px}
-.toast.show{transform:translateY(0);opacity:1}
+  @keyframes fadeUp{
+    from{opacity:0; transform:translateY(18px);}
+    to{opacity:1; transform:translateY(0);}
+  }
 
-/* LOADING OVERLAY */
-.loading-overlay{position:fixed;inset:0;background:rgba(5,5,8,.9);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.5s}
-.loading-overlay.show{opacity:1;pointer-events:all}
-.loader-ring{width:60px;height:60px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loader-text{margin-top:20px;font-size:15px;color:var(--muted)}
+  /* ---------- Sections generic ---------- */
+  section{padding:88px 0;}
+  .section-head{
+    text-align:center;
+    max-width:640px;
+    margin:0 auto 48px;
+  }
+  .section-head .tag{
+    font-size:12.5px; font-weight:700; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--violet);
+    margin-bottom:12px; display:block;
+  }
+  .section-head h2{
+    font-size:clamp(28px,3.4vw,40px);
+    letter-spacing:-0.02em;
+    font-weight:800;
+    margin:0 0 14px;
+  }
+  .section-head p{
+    color:var(--muted);
+    font-size:16.5px;
+    line-height:1.6;
+    margin:0;
+  }
 
-/* RESPONSIVE */
-@media(max-width:900px){
-  nav{padding:16px 24px}
-  .nav-links{display:none}
-  section,#analyzer{padding:60px 24px}
-  .analyzer-wrap{grid-template-columns:1fr}
-  .result-scores{grid-template-columns:1fr}
-  h1{font-size:42px}
-}
+  .reveal{
+    opacity:0;
+    transform:translateY(26px);
+    transition:opacity .7s var(--ease), transform .7s var(--ease);
+  }
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- Form Section ---------- */
+  .form-card{
+    background:linear-gradient(180deg, #ffffff 0%, #fbfbfe 100%);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    padding:48px;
+    box-shadow:var(--shadow-lg);
+    position:relative;
+    overflow:hidden;
+  }
+  .form-card::before{
+    content:"";
+    position:absolute; top:0; left:0; right:0; height:4px;
+    background:linear-gradient(90deg,var(--indigo),var(--violet),var(--cyan));
+  }
+  .grid-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px 28px;
+  }
+  .field{display:flex; flex-direction:column; gap:8px;}
+  .field.full{grid-column:1 / -1;}
+  .field label{
+    font-size:13px; font-weight:650; color:var(--ink-soft);
+    letter-spacing:.01em;
+  }
+  .field input, .field select, .field textarea{
+    font-family:inherit;
+    font-size:14.5px;
+    padding:13px 16px;
+    border-radius:var(--radius-sm);
+    border:1.5px solid var(--line);
+    background:var(--bg-soft);
+    color:var(--ink);
+    outline:none;
+    transition:border-color .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease);
+    width:100%;
+    resize:vertical;
+  }
+  .field textarea{min-height:88px; line-height:1.5;}
+  .field input:focus, .field select:focus, .field textarea:focus{
+    border-color:var(--indigo);
+    background:#fff;
+    box-shadow:0 0 0 4px rgba(79,70,229,.12);
+  }
+  .field input::placeholder, .field textarea::placeholder{color:#a7adba;}
+
+  .analyze-row{
+    display:flex; justify-content:center; margin-top:36px;
+  }
+  .btn-analyze{
+    background:linear-gradient(135deg, var(--indigo) 0%, var(--violet) 55%, var(--cyan) 100%);
+    color:#fff;
+    font-size:16px;
+    font-weight:700;
+    padding:17px 44px;
+    border-radius:999px;
+    border:none;
+    cursor:pointer;
+    box-shadow:0 14px 30px rgba(79,70,229,.32);
+    transition:transform .25s var(--ease), box-shadow .25s var(--ease), filter .25s var(--ease);
+    display:inline-flex; align-items:center; gap:10px;
+  }
+  .btn-analyze:hover{transform:translateY(-3px) scale(1.015); box-shadow:0 18px 36px rgba(79,70,229,.4);}
+  .btn-analyze:active{transform:translateY(0) scale(1);}
+  .btn-analyze:disabled{filter:grayscale(.4); opacity:.7; cursor:wait; transform:none;}
+  .btn-analyze svg{width:18px;height:18px;}
+
+  .spinner{
+    width:18px; height:18px; border-radius:50%;
+    border:2.5px solid rgba(255,255,255,.4);
+    border-top-color:#fff;
+    animation:spin .7s linear infinite;
+    display:none;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* ---------- Results ---------- */
+  #results{display:none;}
+  #results.show{display:block;}
+
+  .card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-md);
+    padding:36px;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+  }
+  .card:hover{transform:translateY(-4px); box-shadow:var(--shadow-lg);}
+
+  /* Score */
+  .score-wrap{
+    display:flex; align-items:center; justify-content:center; gap:64px;
+    flex-wrap:wrap;
+  }
+  .score-ring{
+    position:relative;
+    width:240px; height:240px;
+  }
+  .score-ring svg{transform:rotate(-90deg); width:100%; height:100%;}
+  .score-ring circle{fill:none; stroke-linecap:round;}
+  .score-ring .track{stroke:#eef0f4; stroke-width:14;}
+  .score-ring .prog{
+    stroke-width:14;
+    stroke-dasharray:628;
+    stroke-dashoffset:628;
+    transition:stroke-dashoffset 1.6s var(--ease);
+  }
+  .score-center{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+  }
+  .score-center .num{font-size:52px; font-weight:800; letter-spacing:-0.03em; line-height:1;}
+  .score-center .max{font-size:14px; color:var(--muted); font-weight:600; margin-top:2px;}
+  .score-legend{display:flex; flex-direction:column; gap:18px; min-width:220px;}
+  .score-legend .row{display:flex; align-items:center; justify-content:space-between; font-size:14.5px;}
+  .score-legend .row b{font-weight:700;}
+  .score-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:13px; font-weight:700; padding:7px 14px;
+    border-radius:999px; margin-top:6px;
+  }
+
+  /* Risk bars */
+  .risk-list{display:flex; flex-direction:column; gap:22px;}
+  .risk-item .top{display:flex; justify-content:space-between; font-size:14.5px; margin-bottom:9px;}
+  .risk-item .top .label{font-weight:650; color:var(--ink);}
+  .risk-item .top .pct{font-weight:700;}
+  .risk-track{
+    height:10px; border-radius:999px; background:#eef0f4; overflow:hidden;
+  }
+  .risk-fill{
+    height:100%; border-radius:999px; width:0%;
+    transition:width 1.3s var(--ease);
+    background:linear-gradient(90deg, var(--indigo), var(--violet));
+  }
+
+  /* Market opportunity */
+  .market-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+  }
+  .market-card{
+    border-radius:var(--radius-md);
+    padding:28px 22px;
+    text-align:center;
+    border:1px solid var(--line);
+    background:var(--bg-soft);
+  }
+  .market-card .label{font-size:13px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);}
+  .market-card .value{font-size:30px; font-weight:800; letter-spacing:-0.02em; margin:10px 0 18px;}
+  .funnel-bar{height:10px; border-radius:999px; background:#e5e7f0; overflow:hidden;}
+  .funnel-fill{height:100%; border-radius:999px; width:0%; transition:width 1.4s var(--ease);}
+  .market-card.tam .funnel-fill{background:linear-gradient(90deg,var(--indigo),var(--violet));}
+  .market-card.sam .funnel-fill{background:linear-gradient(90deg,var(--violet),var(--cyan));}
+  .market-card.som .funnel-fill{background:linear-gradient(90deg,var(--cyan),var(--green));}
+
+  /* SWOT */
+  .swot-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .swot-card{
+    border-radius:var(--radius-md);
+    padding:26px;
+    border:1px solid var(--line);
+  }
+  .swot-card h4{
+    margin:0 0 14px; font-size:15px; font-weight:750;
+    display:flex; align-items:center; gap:9px;
+  }
+  .swot-card h4 .ic{width:8px;height:8px;border-radius:50%;}
+  .swot-card ul{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px;}
+  .swot-card li{
+    font-size:14px; line-height:1.5; color:var(--ink-soft);
+    padding-left:18px; position:relative;
+  }
+  .swot-card li::before{
+    content:"";
+    position:absolute; left:0; top:7px;
+    width:6px; height:6px; border-radius:50%;
+    background:currentColor; opacity:.5;
+  }
+  .swot-card.strengths{background:#f0fdf6; border-color:#d6f5e3;}
+  .swot-card.strengths h4{color:#0a8a51;}
+  .swot-card.weaknesses{background:#fff7ed; border-color:#fde6c8;}
+  .swot-card.weaknesses h4{color:#b45309;}
+  .swot-card.opportunities{background:#eef2ff; border-color:#dde2fb;}
+  .swot-card.opportunities h4{color:var(--indigo-deep);}
+  .swot-card.threats{background:#fef2f2; border-color:#fbdada;}
+  .swot-card.threats h4{color:#b91c1c;}
+
+  /* Feature grid (why different) */
+  .feat-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
+  }
+  .feat-card{
+    border-radius:var(--radius-md);
+    border:1px solid var(--line);
+    background:#fff;
+    padding:26px 22px;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
+  }
+  .feat-card:hover{transform:translateY(-5px); box-shadow:var(--shadow-md); border-color:#dcdfff;}
+  .feat-icon{
+    width:42px; height:42px; border-radius:11px;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, var(--indigo), var(--violet));
+    color:#fff; margin-bottom:16px;
+    font-size:18px; font-weight:700;
+  }
+  .feat-card h5{margin:0 0 8px; font-size:15px; font-weight:700;}
+  .feat-card p{margin:0; font-size:13.5px; color:var(--muted); line-height:1.55;}
+
+  /* Recommendations */
+  .rec-list{display:flex; flex-direction:column; gap:16px;}
+  .rec-item{
+    display:flex; gap:16px; align-items:flex-start;
+    padding:20px 22px;
+    border:1px solid var(--line);
+    border-radius:var(--radius-md);
+    background:var(--bg-soft);
+  }
+  .rec-num{
+    flex-shrink:0;
+    width:32px; height:32px; border-radius:50%;
+    background:linear-gradient(135deg,var(--indigo),var(--violet));
+    color:#fff; font-weight:700; font-size:13.5px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .rec-item p{margin:0; font-size:14.5px; line-height:1.6; color:var(--ink-soft); padding-top:4px;}
+
+  /* Verdict */
+  .verdict-card{
+    text-align:center;
+    background:linear-gradient(160deg, #fafbff 0%, #ffffff 60%);
+  }
+  .verdict-badge{
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:20px; font-weight:800;
+    padding:16px 38px;
+    border-radius:999px;
+    margin:10px 0 18px;
+    opacity:0; transform:scale(.85);
+    animation:popIn .6s var(--ease) .15s forwards;
+  }
+  @keyframes popIn{to{opacity:1; transform:scale(1);}}
+  .verdict-card .vtext{
+    max-width:520px; margin:0 auto; color:var(--muted); font-size:15px; line-height:1.6;
+  }
+
+  .section-spacer{height:32px;}
+
+  /* ---------- Pricing (footer-ish section referenced in nav) ---------- */
+  .pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .price-card{
+    border:1px solid var(--line); border-radius:var(--radius-lg);
+    padding:34px 28px; background:#fff; position:relative;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .price-card:hover{transform:translateY(-4px); box-shadow:var(--shadow-md);}
+  .price-card.feat{border-color:var(--indigo); box-shadow:0 16px 40px rgba(79,70,229,.16);}
+  .price-card .ribbon{
+    position:absolute; top:-12px; right:24px;
+    background:linear-gradient(135deg,var(--indigo),var(--violet));
+    color:#fff; font-size:11.5px; font-weight:700;
+    padding:5px 12px; border-radius:999px;
+  }
+  .price-card h4{margin:0 0 6px; font-size:15px; font-weight:700; color:var(--muted); letter-spacing:.03em; text-transform:uppercase;}
+  .price-card .amt{font-size:38px; font-weight:800; letter-spacing:-0.02em; margin:6px 0 4px;}
+  .price-card .amt span{font-size:14px; font-weight:600; color:var(--muted);}
+  .price-card ul{list-style:none; padding:0; margin:24px 0 28px; display:flex; flex-direction:column; gap:12px;}
+  .price-card li{font-size:13.8px; color:var(--ink-soft); padding-left:22px; position:relative;}
+  .price-card li::before{content:"✓"; position:absolute; left:0; color:var(--green); font-weight:800;}
+  .price-card .btn{width:100%; justify-content:center;}
+
+  /* ---------- Contact ---------- */
+  .contact-card{
+    text-align:center;
+    background:linear-gradient(135deg, #0b0d12 0%, #232544 55%, #312e81 100%);
+    color:#fff; border:none;
+    padding:64px 48px;
+  }
+  .contact-card h2{font-size:clamp(26px,3vw,36px); margin:0 0 12px; letter-spacing:-0.02em;}
+  .contact-card p{color:#c7caf0; max-width:480px; margin:0 auto 30px; font-size:15.5px; line-height:1.6;}
+  .contact-card .btn-primary{background:#fff; color:var(--indigo-deep); box-shadow:none;}
+  .contact-card .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.2);}
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:36px 0;
+    text-align:center;
+    color:var(--muted);
+    font-size:13.5px;
+  }
+
+  @media (max-width:880px){
+    .grid-2{grid-template-columns:1fr;}
+    .market-grid{grid-template-columns:1fr;}
+    .swot-grid{grid-template-columns:1fr;}
+    .feat-grid{grid-template-columns:repeat(2,1fr);}
+    .pricing-grid{grid-template-columns:1fr;}
+    .score-wrap{gap:28px;}
+    nav.links{display:none;}
+    .hero-stats{gap:28px;}
+  }
+  @media (max-width:520px){
+    .feat-grid{grid-template-columns:1fr;}
+    .wrap{padding:0 20px;}
+    .nav{padding:0 20px;}
+    .form-card{padding:28px 20px;}
+    .contact-card{padding:44px 24px;}
+  }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="logo">SYNERGY AI</div>
-  <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#analyzer">Analyzer</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#dashboard">Dashboard</a>
+<header>
+  <div class="nav">
+    <div class="logo">
+      <div class="logo-mark"></div>
+      <span class="brand">SYNERGY AI</span>
+      <span class="sub">Validation Engine</span>
+    </div>
+    <nav class="links">
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="btn btn-ghost" onclick="alert('This is a demo — wire this up to your homepage URL.')">← Back to Home</button>
   </div>
-  <button class="nav-cta" onclick="document.getElementById('analyzer').scrollIntoView({behavior:'smooth'})">Start Free</button>
-</nav>
+</header>
 
-<!-- HERO -->
-<div id="hero">
-  <div class="hero-bg">
-    <canvas id="particles"></canvas>
-    <div class="glow-orb orb1"></div>
-    <div class="glow-orb orb2"></div>
-    <div class="glow-orb orb3"></div>
-  </div>
-
-  <div class="hero-badge"><span></span>AI-Powered Platform — Live</div>
-
-  <h1 class="grad-text">Build Smarter.<br>Launch Stronger.</h1>
-  <p class="hero-sub">AI-powered startup validation, market intelligence, and investor readiness in one platform.</p>
-
-  <div class="hero-btns">
-    <button class="btn-primary" onclick="document.getElementById('analyzer').scrollIntoView({behavior:'smooth'})">Start Analysis →</button>
-    <button class="btn-secondary" onclick="showDemo()">▶ Watch Demo</button>
-  </div>
-
-  <div class="metrics-bar">
-    <div class="metric"><div class="metric-val" data-count="12400">0</div><div class="metric-label">Startups Analyzed</div></div>
-    <div class="metric"><div class="metric-val" data-count="94">0</div><div class="metric-label">Accuracy %</div></div>
-    <div class="metric"><div class="metric-val" data-count="320">0</div><div class="metric-label">Investors Connected</div></div>
-    <div class="metric"><div class="metric-val" data-count="4800">0</div><div class="metric-label">Reports Generated</div></div>
-  </div>
-</div>
-
-<!-- FEATURES -->
-<section id="features">
-  <div class="section-tag">Platform Features</div>
-  <h2 class="section-title">Everything you need to<br><span class="grad-text">validate & launch</span></h2>
-  <p class="section-sub">Nine AI modules working together to give you the full picture before you bet everything.</p>
-
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feat-icon" style="background:rgba(79,142,247,0.15)">🎯</div>
-      <div class="feat-title">Startup Analyzer</div>
-      <div class="feat-desc">Enter your idea and get instant AI scores across viability, risk, market demand, competition, and investor readiness.</div>
-      <div class="feat-tags"><span class="tag">Viability Score</span><span class="tag">Risk Score</span><span class="tag">IRS</span></div>
-    </div>
-    <div class="feature-card">
-      <div class="feat-icon" style="background:rgba(16,212,116,0.15)">📊</div>
-      <div class="feat-title">Market Research Engine</div>
-      <div class="feat-desc">Automatically generate TAM, SAM, SOM calculations with SWOT analysis and industry trend forecasting.</div>
-      <div class="feat-tags"><span class="tag">TAM/SAM/SOM</span><span class="tag">SWOT</span><span class="tag">Trends</span></div>
-    </div>
-    <div class="feature-card">
-      <div class="feat-icon" style="background:rgba(139,92,246,0.15)">🔍</div>
-      <div class="feat-title">Competitor Intelligence</div>
-      <div class="feat-desc">Find competitors automatically. Analyze their pricing, funding, strengths, weaknesses, and market positioning.</div>
-      <div class="feat-tags"><span class="tag">Auto-Discovery</span><span class="tag">Funding Data</span><span class="tag">Positioning</span></div>
-    </div>
-    <div class="feature-card">
-      <div class="feat-icon" style="background:rgba(245,200,66,0.15)">💰</div>
-      <div class="feat-title">Financial Forecast Engine</div>
-      <div class="feat-desc">5-year revenue forecasts, burn rate, runway, CAC, LTV, and break-even analysis with scenario modeling.</div>
-      <div class="feat-tags"><span class="tag">5-Year Forecast</span><span class="tag">Burn Rate</span><span class="tag">CAC/LTV</span></div>
-    </div>
-    <div class="feature-card">
-      <div class="feat-icon" style="background:rgba(255,71,87,0.15)">⚠️</div>
-      <div class="feat-title">AI Risk Engine</div>
-      <div class="feat-desc">Risk heatmaps across market, product, technical, funding, and team dimensions with mitigation strategies.</div>
-      <div class="feat-tags"><span class="tag">Risk Heatmap</span><span class="tag">Probability</span><span class="tag">Mitigation</span></div>
-    </div>
-    <div class="feature-card">
-      <div class="feat-icon" style="background:rgba(0,212,255,0.15)">🚀</div>
-      <div class="feat-title">Investor Readiness</div>
-      <div class="feat-desc">Score your startup across team, market, product, financials, and competition. Know exactly where you stand.</div>
-      <div class="feat-tags"><span class="tag">IRS Score</span><span class="tag">Gap Analysis</span><span class="tag">Roadmap</span></div>
-    </div>
-    <div class="feature-card">
-      <div class="feat-icon" style="background:rgba(245,200,66,0.15)">📑</div>
-      <div class="feat-title">AI Pitch Deck Generator</div>
-      <div class="feat-desc">Generate investor-ready PowerPoint and PDF pitch decks automatically from your startup data.</div>
-      <div class="feat-tags"><span class="tag">PowerPoint</span><span class="tag">PDF</span><span class="tag">Auto-Generated</span></div>
-    </div>
-    <div class="feature-card">
-      <div class="feat-icon" style="background:rgba(16,212,116,0.15)">📋</div>
-      <div class="feat-title">AI Business Plan</div>
-      <div class="feat-desc">40-page professional business plan with executive summary, GTM strategy, financials, and risk analysis.</div>
-      <div class="feat-tags"><span class="tag">40 Pages</span><span class="tag">GTM Strategy</span><span class="tag">Financials</span></div>
-    </div>
-    <div class="feature-card">
-      <div class="feat-icon" style="background:rgba(139,92,246,0.15)">🤖</div>
-      <div class="feat-title">AI Co-Founder</div>
-      <div class="feat-desc">Chat with an AI trained on thousands of successful startups. Ask anything, get actionable founder advice.</div>
-      <div class="feat-tags"><span class="tag">ChatGPT-style</span><span class="tag">Founder Advice</span><span class="tag">24/7</span></div>
+<section class="hero" id="home">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span> AI-Powered Business Intelligence</span>
+    <h1>Startup Validation<br><span class="grad">Engine</span></h1>
+    <p class="sub">Validate your startup idea using AI-powered business intelligence, market sizing, and risk analysis — in under sixty seconds.</p>
+    <div class="hero-stats">
+      <div><div class="num">12,400+</div><div class="lab">Ideas validated</div></div>
+      <div><div class="num">94%</div><div class="lab">Founder satisfaction</div></div>
+      <div><div class="num">38 sec</div><div class="lab">Avg. analysis time</div></div>
     </div>
   </div>
 </section>
 
-<!-- ANALYZER -->
-<section id="analyzer" style="padding:100px 60px;background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%)">
-  <div style="max-width:1400px;margin:0 auto">
-    <div class="section-tag">Try It Live</div>
-    <h2 class="section-title">Analyze Your Startup<br><span class="grad-text">in 30 Seconds</span></h2>
+<section id="input-form">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Step 01</span>
+      <h2>Tell us about your startup</h2>
+      <p>The more detail you give the engine, the sharper your validation report will be.</p>
+    </div>
 
-    <div class="analyzer-wrap" style="margin-top:48px">
-      <div class="analyzer-form">
-        <div class="form-title">🔬 Startup Intelligence Report</div>
-
-        <div class="form-group">
-          <label>Startup Name</label>
-          <input type="text" id="startupName" placeholder="e.g. NeoHealth" />
+    <form class="form-card reveal" id="startupForm">
+      <div class="grid-2">
+        <div class="field">
+          <label for="startupName">Startup Name</label>
+          <input id="startupName" type="text" placeholder="e.g. Northstar Labs" required>
         </div>
-        <div class="form-group">
-          <label>Problem You're Solving</label>
-          <textarea id="problem" placeholder="What problem does your startup solve?"></textarea>
-        </div>
-        <div class="form-group">
-          <label>Your Solution</label>
-          <textarea id="solution" placeholder="How does your product solve this problem?"></textarea>
-        </div>
-        <div class="form-group">
-          <label>Target Market</label>
-          <input type="text" id="market" placeholder="e.g. SMBs in healthcare, 10M+ TAM" />
-        </div>
-        <div class="form-group">
-          <label>Revenue Model</label>
-          <select id="revenue">
-            <option value="">Select revenue model</option>
-            <option>SaaS Subscription</option>
-            <option>Marketplace / Commission</option>
-            <option>Freemium</option>
-            <option>Enterprise License</option>
-            <option>Transactional</option>
-            <option>Advertising</option>
-            <option>Hardware + Software</option>
+        <div class="field">
+          <label for="industry">Industry</label>
+          <select id="industry" required>
+            <option value="" disabled selected>Select an industry</option>
+            <option>Fintech</option>
+            <option>Healthtech</option>
+            <option>E-commerce</option>
+            <option>SaaS / B2B Software</option>
+            <option>EdTech</option>
+            <option>Climate & Energy</option>
+            <option>AI / Deep Tech</option>
+            <option>Consumer Mobile App</option>
+            <option>Logistics & Supply Chain</option>
+            <option>Other</option>
           </select>
         </div>
 
-        <button class="analyze-btn" id="analyzeBtn" onclick="runAnalysis()">⚡ Analyze My Startup</button>
-      </div>
-
-      <div class="results-panel" id="resultsPanel">
-        <div style="margin-bottom:24px">
-          <div class="feat-title" style="font-size:24px;margin-bottom:8px">Analysis Results</div>
-          <div style="font-size:14px;color:var(--muted)" id="startupNameDisplay">Enter your startup details and click Analyze →</div>
+        <div class="field full">
+          <label for="problem">Problem Statement</label>
+          <textarea id="problem" placeholder="What painful, expensive, or time-consuming problem are you solving?" required></textarea>
         </div>
 
-        <div class="result-scores" id="scoresGrid">
-          <div class="score-card">
-            <div class="score-ring">
-              <svg viewBox="0 0 80 80"><circle class="track" cx="40" cy="40" r="34"/><circle class="fill" id="ring1" cx="40" cy="40" r="34" stroke="var(--green)" stroke-dasharray="213.6" stroke-dashoffset="213.6"/></svg>
-              <div class="score-num" id="v-score">—</div>
-            </div>
-            <div class="score-label">Viability</div>
-          </div>
-          <div class="score-card">
-            <div class="score-ring">
-              <svg viewBox="0 0 80 80"><circle class="track" cx="40" cy="40" r="34"/><circle class="fill" id="ring2" cx="40" cy="40" r="34" stroke="var(--blue)" stroke-dasharray="213.6" stroke-dashoffset="213.6"/></svg>
-              <div class="score-num" id="m-score">—</div>
-            </div>
-            <div class="score-label">Market</div>
-          </div>
-          <div class="score-card">
-            <div class="score-ring">
-              <svg viewBox="0 0 80 80"><circle class="track" cx="40" cy="40" r="34"/><circle class="fill" id="ring3" cx="40" cy="40" r="34" stroke="var(--red)" stroke-dasharray="213.6" stroke-dashoffset="213.6"/></svg>
-              <div class="score-num" id="r-score">—</div>
-            </div>
-            <div class="score-label">Risk</div>
-          </div>
-          <div class="score-card">
-            <div class="score-ring">
-              <svg viewBox="0 0 80 80"><circle class="track" cx="40" cy="40" r="34"/><circle class="fill" id="ring4" cx="40" cy="40" r="34" stroke="var(--gold)" stroke-dasharray="213.6" stroke-dashoffset="213.6"/></svg>
-              <div class="score-num" id="i-score">—</div>
-            </div>
-            <div class="score-label">Investor Ready</div>
-          </div>
+        <div class="field full">
+          <label for="solution">Solution Description</label>
+          <textarea id="solution" placeholder="How does your product solve that problem?" required></textarea>
         </div>
 
-        <div class="ai-analysis" id="aiAnalysis">
-          <div class="ai-header">
-            <div class="ai-dot"></div>
-            <strong style="font-size:14px">AI Analysis</strong>
-          </div>
-          <div class="ai-text" id="aiText">Waiting for your startup details...</div>
+        <div class="field">
+          <label for="customers">Target Customers</label>
+          <input id="customers" type="text" placeholder="e.g. SMB retailers in Tier-2 cities" required>
+        </div>
+        <div class="field">
+          <label for="revenueModel">Revenue Model</label>
+          <select id="revenueModel" required>
+            <option value="" disabled selected>Select a model</option>
+            <option>Subscription (SaaS)</option>
+            <option>Marketplace Commission</option>
+            <option>Transaction Fees</option>
+            <option>Freemium</option>
+            <option>One-time Purchase</option>
+            <option>Advertising</option>
+            <option>Licensing</option>
+          </select>
         </div>
 
-        <div id="extraInsights" style="display:none;margin-top:16px">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-            <div class="widget" style="border-radius:12px">
-              <div class="widget-label">Est. TAM</div>
-              <div class="widget-val" id="tamVal" style="font-size:20px;color:var(--green)">—</div>
-            </div>
-            <div class="widget" style="border-radius:12px">
-              <div class="widget-label">Competitors Found</div>
-              <div class="widget-val" id="compVal" style="font-size:20px;color:var(--blue)">—</div>
-            </div>
-            <div class="widget" style="border-radius:12px">
-              <div class="widget-label">Est. Runway</div>
-              <div class="widget-val" id="runwayVal" style="font-size:20px;color:var(--gold)">—</div>
-            </div>
-            <div class="widget" style="border-radius:12px">
-              <div class="widget-label">Break-even</div>
-              <div class="widget-val" id="breakVal" style="font-size:20px;color:var(--cyan)">—</div>
-            </div>
-          </div>
-          <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
-            <button class="btn-secondary" style="flex:1;padding:12px;font-size:14px" onclick="generateReport()">📄 Generate Full Report</button>
-            <button class="btn-secondary" style="flex:1;padding:12px;font-size:14px" onclick="generatePitch()">🎯 Create Pitch Deck</button>
-          </div>
+        <div class="field">
+          <label for="pricing">Monthly Pricing (USD)</label>
+          <input id="pricing" type="number" min="0" placeholder="e.g. 49" required>
+        </div>
+        <div class="field">
+          <label for="geo">Geographic Market</label>
+          <input id="geo" type="text" placeholder="e.g. India, USA, Global" required>
+        </div>
+
+        <div class="field full">
+          <label for="funding">Funding Requirement (USD)</label>
+          <input id="funding" type="number" min="0" placeholder="e.g. 250000" required>
         </div>
       </div>
+
+      <div class="analyze-row">
+        <button type="submit" class="btn-analyze" id="analyzeBtn">
+          <span class="spinner" id="spinner"></span>
+          <span id="analyzeLabel">Analyze Startup</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section id="results">
+  <div class="wrap">
+
+    <div class="section-head reveal">
+      <span class="tag">Step 02 · Report</span>
+      <h2 id="reportName">Validation Report</h2>
+      <p>Generated by Synergy AI's business intelligence model based on your inputs.</p>
+    </div>
+
+    <!-- SECTION 1: Viability Score -->
+    <div class="card reveal" style="margin-bottom:28px;">
+      <h3 style="margin:0 0 28px; font-size:18px; font-weight:750;">Startup Viability Score</h3>
+      <div class="score-wrap">
+        <div class="score-ring">
+          <svg viewBox="0 0 220 220">
+            <circle class="track" cx="110" cy="110" r="100"></circle>
+            <circle class="prog" id="scoreCircle" cx="110" cy="110" r="100" stroke="#4f46e5"></circle>
+          </svg>
+          <div class="score-center">
+            <div class="num" id="scoreNum">0</div>
+            <div class="max">out of 100</div>
+          </div>
+        </div>
+        <div class="score-legend">
+          <div class="row"><span>Market Fit</span><b id="legendMarket">—</b></div>
+          <div class="row"><span>Business Model</span><b id="legendModel">—</b></div>
+          <div class="row"><span>Founder Readiness</span><b id="legendFounder">—</b></div>
+          <div class="row"><span>Investor Appeal</span><b id="legendInvestor">—</b></div>
+          <span class="score-badge" id="scoreBadge">Calculating…</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: Risk Analysis -->
+    <div class="card reveal" style="margin-bottom:28px;">
+      <h3 style="margin:0 0 26px; font-size:18px; font-weight:750;">Risk Analysis</h3>
+      <div class="risk-list" id="riskList"></div>
+    </div>
+
+    <!-- SECTION 3: Market Opportunity -->
+    <div class="card reveal" style="margin-bottom:28px;">
+      <h3 style="margin:0 0 26px; font-size:18px; font-weight:750;">Market Opportunity</h3>
+      <div class="market-grid">
+        <div class="market-card tam">
+          <div class="label">TAM</div>
+          <div class="value" id="tamVal">$0</div>
+          <div class="funnel-bar"><div class="funnel-fill" id="tamFill"></div></div>
+        </div>
+        <div class="market-card sam">
+          <div class="label">SAM</div>
+          <div class="value" id="samVal">$0</div>
+          <div class="funnel-bar"><div class="funnel-fill" id="samFill"></div></div>
+        </div>
+        <div class="market-card som">
+          <div class="label">SOM</div>
+          <div class="value" id="somVal">$0</div>
+          <div class="funnel-bar"><div class="funnel-fill" id="somFill"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: SWOT -->
+    <div class="reveal" style="margin-bottom:28px;">
+      <h3 style="margin:0 0 20px; font-size:18px; font-weight:750;">SWOT Analysis</h3>
+      <div class="swot-grid">
+        <div class="swot-card strengths">
+          <h4><span class="ic" style="background:#0a8a51;"></span>Strengths</h4>
+          <ul id="swotStrengths"></ul>
+        </div>
+        <div class="swot-card weaknesses">
+          <h4><span class="ic" style="background:#b45309;"></span>Weaknesses</h4>
+          <ul id="swotWeaknesses"></ul>
+        </div>
+        <div class="swot-card opportunities">
+          <h4><span class="ic" style="background:#4338ca;"></span>Opportunities</h4>
+          <ul id="swotOpportunities"></ul>
+        </div>
+        <div class="swot-card threats">
+          <h4><span class="ic" style="background:#b91c1c;"></span>Threats</h4>
+          <ul id="swotThreats"></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 6: Recommendations -->
+    <div class="card reveal" style="margin-bottom:28px;">
+      <h3 style="margin:0 0 22px; font-size:18px; font-weight:750;">AI Recommendations</h3>
+      <div class="rec-list" id="recList"></div>
+    </div>
+
+    <!-- SECTION 7: Final Verdict -->
+    <div class="card verdict-card reveal">
+      <h3 style="margin:0 0 4px; font-size:18px; font-weight:750; color:var(--muted);">Final Verdict</h3>
+      <div>
+        <span class="verdict-badge" id="verdictBadge">—</span>
+      </div>
+      <p class="vtext" id="verdictText">—</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECTION 5: Why Synergy AI Is Different -->
+<section id="features" style="background:var(--bg-soft);">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Why Synergy AI</span>
+      <h2>Why Synergy AI Is Different</h2>
+      <p>One engine, eight layers of analysis — built for founders who want investor-grade clarity before they write a single line of code.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card reveal"><div class="feat-icon">AI</div><h5>AI Startup Validation</h5><p>End-to-end scoring across market, model, and execution signals.</p></div>
+      <div class="feat-card reveal"><div class="feat-icon">IR</div><h5>Investor Readiness Score</h5><p>See your startup the way a VC associate would on first read.</p></div>
+      <div class="feat-card reveal"><div class="feat-icon">CI</div><h5>Competitor Intelligence</h5><p>Surface the players already fighting for your customer's budget.</p></div>
+      <div class="feat-card reveal"><div class="feat-icon">RP</div><h5>Risk Prediction</h5><p>Five-vector risk modeling across market, tech, and funding.</p></div>
+      <div class="feat-card reveal"><div class="feat-icon">TS</div><h5>TAM SAM SOM Generator</h5><p>Defensible market-sizing numbers, generated in seconds.</p></div>
+      <div class="feat-card reveal"><div class="feat-icon">BM</div><h5>Business Model Evaluation</h5><p>Stress-test pricing and revenue mechanics against your market.</p></div>
+      <div class="feat-card reveal"><div class="feat-icon">PD</div><h5>Pitch Deck Readiness</h5><p>Know exactly which slides will survive investor scrutiny.</p></div>
+      <div class="feat-card reveal"><div class="feat-icon">CF</div><h5>AI Co-Founder Assistant</h5><p>An always-on thinking partner for the decisions founders lose sleep over.</p></div>
     </div>
   </div>
 </section>
 
-<!-- DASHBOARD PREVIEW -->
-<section id="dashboard" style="padding:100px 60px">
-  <div style="max-width:1400px;margin:0 auto">
-    <div class="section-tag">Command Center</div>
-    <h2 class="section-title">Your Startup<br><span class="grad-text">Intelligence Dashboard</span></h2>
-
-    <div class="dash-preview">
-      <div class="dash-header">
-        <div class="dash-title">Portfolio Overview</div>
-        <div class="dash-live"><span style="width:6px;height:6px;background:var(--green);border-radius:50%;display:inline-block;animation:pulse 2s infinite"></span>Live Data</div>
-      </div>
-
-      <div class="widgets">
-        <div class="widget">
-          <div class="widget-label">Health Score</div>
-          <div class="widget-val" style="color:var(--green)" id="w1">87</div>
-          <div class="widget-delta delta-up">↑ 12% this week</div>
-        </div>
-        <div class="widget">
-          <div class="widget-label">Market Demand</div>
-          <div class="widget-val" style="color:var(--blue)" id="w2">73</div>
-          <div class="widget-delta delta-up">↑ 5% this month</div>
-        </div>
-        <div class="widget">
-          <div class="widget-label">Risk Index</div>
-          <div class="widget-val" style="color:var(--red)" id="w3">34</div>
-          <div class="widget-delta delta-down">↓ 8% improved</div>
-        </div>
-        <div class="widget">
-          <div class="widget-label">Investor Ready</div>
-          <div class="widget-val" style="color:var(--gold)" id="w4">61</div>
-          <div class="widget-delta delta-up">↑ 19% this week</div>
-        </div>
-        <div class="widget">
-          <div class="widget-label">Competitors</div>
-          <div class="widget-val" style="color:var(--purple)" id="w5">12</div>
-          <div class="widget-delta" style="color:var(--muted)">3 new tracked</div>
-        </div>
-        <div class="widget">
-          <div class="widget-label">Financial Health</div>
-          <div class="widget-val" style="color:var(--cyan)" id="w6">78</div>
-          <div class="widget-delta delta-up">↑ Runway: 18mo</div>
-        </div>
-      </div>
-
-      <div class="chart-area">
-        <div class="chart-label">Revenue Forecast — 12 Months (₹ Lakhs)</div>
-        <svg class="sparkline" id="forecastChart" viewBox="0 0 900 140" preserveAspectRatio="none"></svg>
-      </div>
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="tag">Pricing</span>
+      <h2>Plans for every stage</h2>
+      <p>Start free, upgrade when you're raising.</p>
     </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section id="pricing" style="padding:100px 60px;background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 50%,var(--bg) 100%)">
-  <div style="max-width:1400px;margin:0 auto">
-    <div class="section-tag">Pricing</div>
-    <h2 class="section-title">Simple, Transparent<br><span class="grad-text">Pricing</span></h2>
-    <p class="section-sub">Start free. Scale as you grow. Cancel anytime.</p>
-
     <div class="pricing-grid">
-      <div class="plan-card">
-        <div class="plan-name">Free</div>
-        <div class="plan-price">₹0<span>/month</span></div>
-        <div class="plan-desc">Perfect for exploring and testing your first startup idea.</div>
-        <ul class="plan-features">
-          <li>3 Startup Analyses / month</li>
-          <li>Basic Viability Score</li>
-          <li>Market Overview</li>
-          <li>AI Co-Founder (10 msgs)</li>
+      <div class="price-card reveal">
+        <h4>Founder</h4>
+        <div class="amt">$0 <span>/ month</span></div>
+        <ul>
+          <li>3 validations / month</li>
+          <li>Core viability score</li>
+          <li>Basic risk analysis</li>
         </ul>
-        <button class="plan-btn" onclick="showToast('Free plan activated!')">Get Started Free</button>
+        <button class="btn btn-ghost">Get Started</button>
       </div>
-
-      <div class="plan-card featured">
-        <div class="plan-badge">Most Popular</div>
-        <div class="plan-name">Starter</div>
-        <div class="plan-price">₹999<span>/month</span></div>
-        <div class="plan-desc">For serious founders validating and building their MVP.</div>
-        <ul class="plan-features">
-          <li>20 Startup Analyses / month</li>
-          <li>Full Score Dashboard</li>
-          <li>Market Research Engine</li>
-          <li>Competitor Intelligence</li>
-          <li>Financial Forecasting</li>
-          <li>AI Co-Founder (unlimited)</li>
-          <li>PDF Reports</li>
+      <div class="price-card feat reveal">
+        <span class="ribbon">Most Popular</span>
+        <h4>Studio</h4>
+        <div class="amt">$49 <span>/ month</span></div>
+        <ul>
+          <li>Unlimited validations</li>
+          <li>Full SWOT & TAM/SAM/SOM</li>
+          <li>Investor readiness score</li>
+          <li>Pitch deck readiness audit</li>
         </ul>
-        <button class="plan-btn featured" onclick="showToast('Redirecting to Stripe...')">Start Starter Plan</button>
+        <button class="btn btn-primary">Start Free Trial</button>
       </div>
-
-      <div class="plan-card">
-        <div class="plan-name">Pro</div>
-        <div class="plan-price">₹4,999<span>/month</span></div>
-        <div class="plan-desc">For growth-stage startups preparing for fundraising.</div>
-        <ul class="plan-features">
-          <li>Unlimited Analyses</li>
-          <li>AI Pitch Deck Generator</li>
-          <li>40-Page Business Plan</li>
-          <li>Risk Heatmap Engine</li>
-          <li>Investor Readiness Report</li>
-          <li>5-Year Financial Models</li>
-          <li>Priority Support</li>
-          <li>White-label Reports</li>
+      <div class="price-card reveal">
+        <h4>Venture</h4>
+        <div class="amt">$199 <span>/ month</span></div>
+        <ul>
+          <li>Everything in Studio</li>
+          <li>Competitor intelligence feed</li>
+          <li>AI Co-Founder Assistant</li>
+          <li>Priority support</li>
         </ul>
-        <button class="plan-btn" onclick="showToast('Redirecting to Stripe...')">Start Pro Plan</button>
-      </div>
-
-      <div class="plan-card">
-        <div class="plan-name">Enterprise</div>
-        <div class="plan-price">Custom<span></span></div>
-        <div class="plan-desc">For accelerators, VCs, and enterprise innovation teams.</div>
-        <ul class="plan-features">
-          <li>Everything in Pro</li>
-          <li>Custom AI Models</li>
-          <li>API Access</li>
-          <li>Dedicated Account Manager</li>
-          <li>SSO & Advanced Security</li>
-          <li>Custom Integrations</li>
-          <li>SLA Guarantee</li>
-        </ul>
-        <button class="plan-btn" onclick="showToast('Sales team will contact you shortly!')">Contact Sales</button>
+        <button class="btn btn-ghost">Contact Sales</button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">SYNERGY AI</div>
-  <div style="font-size:14px;color:var(--muted);margin-bottom:24px">AI-Powered Startup Intelligence Platform</div>
-  <div class="footer-links">
-    <a href="#">Features</a><a href="#">Pricing</a><a href="#">Blog</a>
-    <a href="#">About</a><a href="#">Privacy</a><a href="#">Terms</a>
-    <a href="#">API</a><a href="#">Contact</a>
+<section id="contact" style="background:var(--bg-soft);">
+  <div class="wrap">
+    <div class="contact-card card reveal">
+      <h2>Ready to validate your next big idea?</h2>
+      <p>Join thousands of founders who de-risked their startup before writing a single line of code.</p>
+      <button class="btn btn-primary" onclick="document.getElementById('startupForm').scrollIntoView({behavior:'smooth'})">Analyze Your Startup</button>
+    </div>
   </div>
-  <div class="footer-copy">© 2025 Synergy AI. Built for founders, by founders.</div>
+</section>
+
+<footer>
+  <div class="wrap">© 2026 Synergy AI. All analysis is AI-generated and for illustrative purposes only.</div>
 </footer>
 
-<!-- TOAST -->
-<div class="toast" id="toast"></div>
-
-<!-- LOADING -->
-<div class="loading-overlay" id="loadingOverlay">
-  <div class="loader-ring"></div>
-  <div class="loader-text" id="loaderText">Analyzing your startup...</div>
-</div>
-
 <script>
-// PARTICLES
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-let particles = [];
-function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
+(function(){
+  "use strict";
 
-for (let i = 0; i < 80; i++) {
-  particles.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * 0.3,
-    vy: (Math.random() - 0.5) * 0.3,
-    size: Math.random() * 2 + 0.5,
-    opacity: Math.random() * 0.5 + 0.1,
-    color: ['#f5c842','#4f8ef7','#00d4ff','#8b5cf6'][Math.floor(Math.random()*4)]
-  });
-}
-
-function animParticles() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => {
-    p.x += p.vx; p.y += p.vy;
-    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fillStyle = p.color + Math.floor(p.opacity * 255).toString(16).padStart(2,'0');
-    ctx.fill();
-  });
-  // draw connecting lines
-  for (let i = 0; i < particles.length; i++) {
-    for (let j = i+1; j < particles.length; j++) {
-      const d = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
-      if (d < 100) {
-        ctx.beginPath();
-        ctx.moveTo(particles[i].x, particles[i].y);
-        ctx.lineTo(particles[j].x, particles[j].y);
-        ctx.strokeStyle = `rgba(255,255,255,${0.05 * (1 - d/100)})`;
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
+  /* ---------- Scroll reveal ---------- */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
       }
+    });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
+
+  /* ---------- Helpers ---------- */
+  function rand(min,max){ return Math.random()*(max-min)+min; }
+  function randInt(min,max){ return Math.floor(rand(min,max+1)); }
+  function pick(arr){ return arr[randInt(0,arr.length-1)]; }
+  function pickN(arr,n){
+    const copy = arr.slice();
+    const out = [];
+    while(out.length<n && copy.length){
+      out.push(copy.splice(randInt(0,copy.length-1),1)[0]);
     }
+    return out;
   }
-  requestAnimationFrame(animParticles);
-}
-animParticles();
-
-// GSAP ANIMATIONS
-gsap.registerPlugin(ScrollTrigger);
-
-gsap.from('.hero-badge', { opacity: 0, y: 20, duration: 0.8, delay: 0.3 });
-gsap.from('h1', { opacity: 0, y: 40, duration: 1, delay: 0.5 });
-gsap.from('.hero-sub', { opacity: 0, y: 30, duration: 0.8, delay: 0.8 });
-gsap.from('.hero-btns', { opacity: 0, y: 20, duration: 0.8, delay: 1.0 });
-gsap.from('.metrics-bar', { opacity: 0, y: 30, duration: 0.8, delay: 1.2 });
-
-gsap.utils.toArray('.feature-card').forEach((card, i) => {
-  gsap.from(card, {
-    scrollTrigger: { trigger: card, start: 'top 85%' },
-    opacity: 0, y: 40, duration: 0.6, delay: i * 0.07
-  });
-});
-
-gsap.utils.toArray('.plan-card').forEach((card, i) => {
-  gsap.from(card, {
-    scrollTrigger: { trigger: card, start: 'top 85%' },
-    opacity: 0, y: 40, duration: 0.6, delay: i * 0.1
-  });
-});
-
-// COUNTER ANIMATION
-function animateCounters() {
-  document.querySelectorAll('[data-count]').forEach(el => {
-    const target = parseInt(el.dataset.count);
-    let current = 0;
-    const step = target / 60;
-    const timer = setInterval(() => {
-      current = Math.min(current + step, target);
-      el.textContent = current >= 1000 ? (current/1000).toFixed(1) + 'K+' : Math.floor(current) + (target === 94 ? '%' : '+');
-      if (current >= target) clearInterval(timer);
-    }, 16);
-  });
-}
-setTimeout(animateCounters, 1300);
-
-// FORECAST CHART
-function drawForecastChart() {
-  const svg = document.getElementById('forecastChart');
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const data = [8,14,22,31,43,58,74,89,108,132,158,189];
-  const maxVal = 200;
-  const w = 900, h = 140, pad = 40;
-  const xStep = (w - pad*2) / 11;
-
-  // gradient bg
-  svg.innerHTML = `
-    <defs>
-      <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#f5c842" stop-opacity="0.3"/>
-        <stop offset="100%" stop-color="#f5c842" stop-opacity="0"/>
-      </linearGradient>
-    </defs>`;
-
-  // area path
-  let areaD = `M${pad},${h - pad}`;
-  data.forEach((v, i) => {
-    const x = pad + i * xStep;
-    const y = h - pad - (v / maxVal) * (h - pad*2);
-    areaD += ` L${x},${y}`;
-  });
-  areaD += ` L${pad + 11*xStep},${h-pad} Z`;
-
-  // line path
-  let lineD = '';
-  data.forEach((v, i) => {
-    const x = pad + i * xStep;
-    const y = h - pad - (v / maxVal) * (h - pad*2);
-    lineD += i === 0 ? `M${x},${y}` : ` L${x},${y}`;
-  });
-
-  svg.innerHTML += `<path d="${areaD}" fill="url(#lineGrad)"/>`;
-  svg.innerHTML += `<path d="${lineD}" fill="none" stroke="#f5c842" stroke-width="2.5" stroke-linejoin="round"/>`;
-
-  // dots + labels
-  data.forEach((v, i) => {
-    const x = pad + i * xStep;
-    const y = h - pad - (v / maxVal) * (h - pad*2);
-    svg.innerHTML += `<circle cx="${x}" cy="${y}" r="4" fill="#f5c842"/>`;
-    svg.innerHTML += `<text x="${x}" y="${h-4}" text-anchor="middle" fill="#78789a" font-size="10">${months[i]}</text>`;
-  });
-}
-drawForecastChart();
-
-// LIVE WIDGET UPDATES
-function liveWidgets() {
-  const ids = ['w1','w2','w3','w4','w5','w6'];
-  const bases = [87,73,34,61,12,78];
-  ids.forEach((id, i) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const jitter = Math.floor((Math.random()-0.5)*4);
-      el.textContent = bases[i] + jitter;
+  function fmtMoney(n){
+    if(n>=1e9) return '$' + (n/1e9).toFixed(1).replace(/\.0$/,'') + 'B';
+    if(n>=1e6) return '$' + (n/1e6).toFixed(1).replace(/\.0$/,'') + 'M';
+    if(n>=1e3) return '$' + (n/1e3).toFixed(0) + 'K';
+    return '$' + n;
+  }
+  function countUp(el, to, duration){
+    const start = performance.now();
+    const from = 0;
+    function tick(now){
+      const p = Math.min(1,(now-start)/duration);
+      const eased = 1 - Math.pow(1-p,3);
+      el.textContent = Math.round(from + (to-from)*eased);
+      if(p<1) requestAnimationFrame(tick);
+      else el.textContent = to;
     }
+    requestAnimationFrame(tick);
+  }
+
+  /* ---------- Form submit ---------- */
+  const form = document.getElementById('startupForm');
+  const analyzeBtn = document.getElementById('analyzeBtn');
+  const spinner = document.getElementById('spinner');
+  const analyzeLabel = document.getElementById('analyzeLabel');
+  const results = document.getElementById('results');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const data = {
+      name: document.getElementById('startupName').value.trim() || 'Your Startup',
+      industry: document.getElementById('industry').value,
+      problem: document.getElementById('problem').value.trim(),
+      solution: document.getElementById('solution').value.trim(),
+      customers: document.getElementById('customers').value.trim(),
+      revenueModel: document.getElementById('revenueModel').value,
+      pricing: parseFloat(document.getElementById('pricing').value) || 0,
+      geo: document.getElementById('geo').value.trim(),
+      funding: parseFloat(document.getElementById('funding').value) || 0
+    };
+
+    analyzeBtn.disabled = true;
+    spinner.style.display = 'inline-block';
+    analyzeLabel.textContent = 'Analyzing…';
+
+    setTimeout(function(){
+      runAnalysis(data);
+      analyzeBtn.disabled = false;
+      spinner.style.display = 'none';
+      analyzeLabel.textContent = 'Analyze Startup';
+      results.classList.add('show');
+      // re-trigger reveal observer for newly visible nodes
+      document.querySelectorAll('#results .reveal').forEach(el=>io.observe(el));
+      setTimeout(()=>{ results.scrollIntoView({behavior:'smooth', block:'start'}); }, 60);
+    }, 1400);
   });
-}
-setInterval(liveWidgets, 3000);
 
-// TOAST
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
-}
+  /* ---------- Core simulated analysis ---------- */
+  function runAnalysis(data){
+    document.getElementById('reportName').textContent = data.name + ' — Validation Report';
 
-// DEMO
-function showDemo() {
-  showToast('📺 Demo video coming soon — try the live analyzer below!');
-  document.getElementById('analyzer').scrollIntoView({ behavior: 'smooth' });
-}
+    // ----- Viability score -----
+    const marketFit = randInt(55,92);
+    const bizModel = randInt(50,90);
+    const founderReadiness = randInt(45,88);
+    const investorAppeal = randInt(48,90);
+    const overall = Math.round((marketFit*0.3 + bizModel*0.25 + founderReadiness*0.2 + investorAppeal*0.25));
 
-// ANALYSIS ENGINE
-const AI_TEXTS = [
-  `Your startup shows <strong>strong fundamentals</strong>. The problem-solution fit is clear, and the target market is well-defined with significant TAM. Key strengths include scalability of the revenue model and strong market timing. <strong>Primary risk:</strong> Customer acquisition cost may be high in early stages. Recommend validating with 50+ customer interviews before seed round. <strong>Investor verdict:</strong> Ready for pre-seed with traction data.`,
-  `<strong>High-potential idea</strong> in a growing market segment. The solution directly addresses a genuine pain point. Competition analysis shows 3 major players but significant gaps in the mid-market segment — your positioning opportunity. <strong>Financial outlook:</strong> Break-even achievable at month 14 with disciplined burn. Focus on unit economics early. <strong>Next milestone:</strong> Build an MVP and get 10 paying customers in 60 days.`,
-  `Market timing is excellent — this space is experiencing <strong>47% YoY growth</strong>. Your revenue model is proven in adjacent markets. Risk profile is moderate; main concerns are technical execution and team scaling. <strong>Recommendation:</strong> Prioritize founding team strength in your pitch. Investors will scrutinize this heavily. Consider adding a technical co-founder. <strong>Runway estimate:</strong> 18+ months with ₹50L seed raise.`
-];
+    document.getElementById('legendMarket').textContent = marketFit + '/100';
+    document.getElementById('legendModel').textContent = bizModel + '/100';
+    document.getElementById('legendFounder').textContent = founderReadiness + '/100';
+    document.getElementById('legendInvestor').textContent = investorAppeal + '/100';
 
-async function runAnalysis() {
-  const name = document.getElementById('startupName').value.trim();
-  const problem = document.getElementById('problem').value.trim();
-  const solution = document.getElementById('solution').value.trim();
-  const market = document.getElementById('market').value.trim();
-  const revenue = document.getElementById('revenue').value;
+    const circle = document.getElementById('scoreCircle');
+    const circumference = 628; // 2*pi*100 approx
+    const offset = circumference - (overall/100)*circumference;
 
-  if (!name || !problem) { showToast('⚠️ Please fill in at least Startup Name and Problem'); return; }
+    let scoreColor = '#ef4444';
+    let badgeBg = '#fef2f2', badgeColor='#b91c1c', badgeText='Needs Work';
+    if(overall>=75){ scoreColor='#10b981'; badgeBg='#f0fdf6'; badgeColor='#0a8a51'; badgeText='Excellent'; }
+    else if(overall>=60){ scoreColor='#4f46e5'; badgeBg='#eef2ff'; badgeColor='#3730a3'; badgeText='Promising'; }
+    else if(overall>=45){ scoreColor='#f59e0b'; badgeBg='#fff7ed'; badgeColor='#b45309'; badgeText='Moderate'; }
 
-  const btn = document.getElementById('analyzeBtn');
-  btn.disabled = true;
-  btn.textContent = '⏳ Analyzing...';
+    circle.setAttribute('stroke', scoreColor);
+    requestAnimationFrame(()=>{ circle.style.strokeDashoffset = offset; });
 
-  const overlay = document.getElementById('loadingOverlay');
-  const loaderMsgs = ['Running AI analysis...','Scanning market data...','Calculating risk scores...','Generating insights...'];
-  let msgIdx = 0;
-  overlay.classList.add('show');
-  const msgTimer = setInterval(() => {
-    document.getElementById('loaderText').textContent = loaderMsgs[++msgIdx % loaderMsgs.length];
-  }, 1200);
+    const scoreNum = document.getElementById('scoreNum');
+    countUp(scoreNum, overall, 1500);
 
-  // Simulate AI processing
-  await new Promise(r => setTimeout(r, 3500));
+    const badge = document.getElementById('scoreBadge');
+    badge.textContent = badgeText;
+    badge.style.background = badgeBg;
+    badge.style.color = badgeColor;
 
-  clearInterval(msgTimer);
-  overlay.classList.remove('show');
+    // ----- Risk analysis -----
+    const risks = [
+      {label:'Market Risk', val: randInt(20,75)},
+      {label:'Technical Risk', val: randInt(15,65)},
+      {label:'Competition Risk', val: randInt(30,85)},
+      {label:'Funding Risk', val: randInt(20,70)},
+      {label:'Execution Risk', val: randInt(15,60)}
+    ];
+    const riskList = document.getElementById('riskList');
+    riskList.innerHTML = '';
+    risks.forEach((r,i)=>{
+      const item = document.createElement('div');
+      item.className = 'risk-item';
+      const color = r.val>=65 ? 'linear-gradient(90deg,#f59e0b,#ef4444)' : r.val>=40 ? 'linear-gradient(90deg,#4f46e5,#7c3aed)' : 'linear-gradient(90deg,#10b981,#06b6d4)';
+      item.innerHTML = `
+        <div class="top"><span class="label">${r.label}</span><span class="pct">${r.val}%</span></div>
+        <div class="risk-track"><div class="risk-fill" style="background:${color}"></div></div>
+      `;
+      riskList.appendChild(item);
+      const fill = item.querySelector('.risk-fill');
+      setTimeout(()=>{ fill.style.width = r.val + '%'; }, 100 + i*120);
+    });
 
-  // Generate semi-deterministic scores based on input length
-  const seed = (name + problem + solution).length;
-  const viability = 55 + (seed % 35);
-  const marketScore = 50 + ((seed * 7) % 40);
-  const risk = 25 + ((seed * 3) % 45);
-  const investor = 40 + ((seed * 11) % 45);
+    // ----- Market opportunity (TAM/SAM/SOM) -----
+    const tam = 5_000_000_000;
+    const sam = 500_000_000;
+    const som = 5_000_000;
+    document.getElementById('tamVal').textContent = fmtMoney(tam);
+    document.getElementById('samVal').textContent = fmtMoney(sam);
+    document.getElementById('somVal').textContent = fmtMoney(som);
+    setTimeout(()=>{ document.getElementById('tamFill').style.width = '100%'; }, 150);
+    setTimeout(()=>{ document.getElementById('samFill').style.width = '62%'; }, 300);
+    setTimeout(()=>{ document.getElementById('somFill').style.width = '18%'; }, 450);
 
-  // Show results
-  document.getElementById('startupNameDisplay').textContent = `Analysis for: ${name}`;
-  document.getElementById('resultsPanel').classList.add('show');
-  document.getElementById('extraInsights').style.display = 'block';
+    // ----- SWOT -----
+    const industryLabel = data.industry || 'this industry';
+    const strengthsPool = [
+      `Clear problem definition tailored to ${data.customers || 'a well-defined customer segment'}`,
+      `Differentiated solution approach in ${industryLabel}`,
+      `Lean ${data.revenueModel || 'revenue'} model with low operating overhead`,
+      `Founding team appears domain-aware based on submitted inputs`,
+      `Pricing of $${data.pricing || '—'}/mo positions product within accessible market range`,
+      `Geographic focus on ${data.geo || 'a defined market'} allows for concentrated go-to-market execution`
+    ];
+    const weaknessesPool = [
+      `Limited public validation data available at this stage`,
+      `Revenue model may require iteration once usage data arrives`,
+      `Customer acquisition strategy not yet detailed`,
+      `Dependency on a single pricing tier limits monetization flexibility`,
+      `Team bandwidth may be a constraint relative to scope of ${data.solution ? 'the proposed solution' : 'the roadmap'}`,
+      `Early-stage brand has no measurable market trust yet`
+    ];
+    const opportunitiesPool = [
+      `Growing demand within ${industryLabel} creates tailwinds for new entrants`,
+      `Potential to expand beyond ${data.geo || 'the initial market'} once product-market fit is confirmed`,
+      `Possible partnerships with adjacent platforms serving ${data.customers || 'similar customers'}`,
+      `Underserved segment within the SAM could be captured with focused positioning`,
+      `Upsell potential via tiered pricing above the current $${data.pricing || '—'}/mo entry point`,
+      `AI-driven efficiency gains could reduce customer acquisition costs over time`
+    ];
+    const threatsPool = [
+      `Incumbents in ${industryLabel} may respond quickly to new entrants`,
+      `Macroeconomic shifts could affect funding availability for a $${(data.funding||0).toLocaleString()} raise`,
+      `Customer switching costs may be lower than anticipated`,
+      `Regulatory changes in ${data.geo || 'target markets'} could affect operations`,
+      `New AI-native competitors could compress differentiation window`,
+      `Talent acquisition in a competitive hiring market could slow execution`
+    ];
 
-  // Animate rings
-  animRing('ring1', viability, 'v-score');
-  animRing('ring2', marketScore, 'm-score');
-  animRing('ring3', risk, 'r-score');
-  animRing('ring4', investor, 'i-score');
+    fillList('swotStrengths', pickN(strengthsPool,4));
+    fillList('swotWeaknesses', pickN(weaknessesPool,4));
+    fillList('swotOpportunities', pickN(opportunitiesPool,4));
+    fillList('swotThreats', pickN(threatsPool,4));
 
-  // Extra metrics
-  const tams = ['₹2.4B','₹8.1B','₹1.2B','₹15B','₹4.7B'];
-  const comps = [7,12,4,19,9];
-  document.getElementById('tamVal').textContent = tams[seed % 5];
-  document.getElementById('compVal').textContent = comps[seed % 5];
-  document.getElementById('runwayVal').textContent = (12 + seed % 12) + ' mo';
-  document.getElementById('breakVal').textContent = 'Month ' + (10 + seed % 8);
+    function fillList(id, items){
+      const ul = document.getElementById(id);
+      ul.innerHTML = '';
+      items.forEach(t=>{
+        const li = document.createElement('li');
+        li.textContent = t;
+        ul.appendChild(li);
+      });
+    }
 
-  // Type AI text
-  typeText('aiText', AI_TEXTS[seed % 3]);
+    // ----- Recommendations -----
+    const recPool = [
+      `Run 15–20 customer discovery interviews with ${data.customers || 'your target segment'} before writing further code.`,
+      `Build a clickable prototype to validate willingness to pay at the $${data.pricing || '—'}/mo price point.`,
+      `Narrow your initial go-to-market to a single city or channel within ${data.geo || 'your target market'} to control burn.`,
+      `Document a 12-month milestone plan that justifies the $${(data.funding||0).toLocaleString()} funding ask to investors.`,
+      `Identify your three closest competitors in ${industryLabel} and map a clear wedge of differentiation.`,
+      `Instrument early usage analytics now so retention data exists before your next fundraising conversation.`,
+      `Test an alternate ${data.revenueModel || 'pricing'} structure in parallel to de-risk the current model.`,
+      `Recruit one advisor with direct operating experience in ${industryLabel} to strengthen investor confidence.`
+    ];
+    const recs = pickN(recPool, 5);
+    const recList = document.getElementById('recList');
+    recList.innerHTML = '';
+    recs.forEach((r,i)=>{
+      const div = document.createElement('div');
+      div.className = 'rec-item';
+      div.innerHTML = `<div class="rec-num">${i+1}</div><p>${r}</p>`;
+      recList.appendChild(div);
+    });
 
-  btn.disabled = false;
-  btn.textContent = '⚡ Analyze My Startup';
-  showToast('✅ Analysis complete!');
-}
-
-function animRing(ringId, score, numId) {
-  const ring = document.getElementById(ringId);
-  const num = document.getElementById(numId);
-  const circumference = 213.6;
-  const offset = circumference - (score / 100) * circumference;
-  setTimeout(() => {
-    ring.style.strokeDashoffset = offset;
-    let count = 0;
-    const t = setInterval(() => {
-      count++;
-      num.textContent = Math.floor(score * count / 60);
-      if (count >= 60) { num.textContent = score; clearInterval(t); }
-    }, 25);
-  }, 100);
-}
-
-function typeText(id, html) {
-  const el = document.getElementById(id);
-  el.innerHTML = '<span class="typing"></span>';
-  const stripped = html.replace(/<[^>]+>/g, '');
-  let i = 0;
-  const timer = setInterval(() => {
-    i += 3;
-    if (i >= stripped.length) {
-      el.innerHTML = html;
-      clearInterval(timer);
+    // ----- Final verdict -----
+    let verdict, vColor, vBg, vDesc;
+    if(overall>=75){
+      verdict='Strong Opportunity'; vColor='#0a8a51'; vBg='#eafff3';
+      vDesc=`${data.name} shows strong fundamentals across market fit, business model, and investor appeal. This is a green light to move toward building and fundraising.`;
+    } else if(overall>=60){
+      verdict='Moderate Opportunity'; vColor='#3730a3'; vBg='#eef2ff';
+      vDesc=`${data.name} has a workable foundation with some open questions in execution or competitive positioning. Address the flagged risks before scaling spend.`;
+    } else if(overall>=45){
+      verdict='High Risk'; vColor='#b45309'; vBg='#fff7ed';
+      vDesc=`${data.name} carries meaningful risk across one or more core dimensions. Validate the riskiest assumptions directly with customers before committing capital.`;
     } else {
-      el.innerHTML = stripped.substring(0, i) + '<span class="typing"></span>';
+      verdict='Not Recommended'; vColor='#b91c1c'; vBg='#fef2f2';
+      vDesc=`In its current form, ${data.name} shows significant gaps that would concern most investors. Consider a pivot on positioning, model, or target market.`;
     }
-  }, 20);
-}
+    const vb = document.getElementById('verdictBadge');
+    vb.textContent = verdict;
+    vb.style.background = vBg;
+    vb.style.color = vColor;
+    vb.style.boxShadow = `0 0 0 1px ${vColor}22 inset`;
+    document.getElementById('verdictText').textContent = vDesc;
+  }
 
-function generateReport() {
-  showToast('📄 Full report generating... (Pro feature — upgrade to download)');
-}
-function generatePitch() {
-  showToast('🎯 Pitch deck generation... (Pro feature — upgrade to export)');
-}
+})();
 </script>
 </body>
 </html>
