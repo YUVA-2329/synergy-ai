@@ -92,7 +92,7 @@ export function HeroSection({ animateIn = true }: HeroSectionProps) {
             Start Analysis
           </NeonButton>
           <NeonButton data-hero="cta" variant="secondary" size="lg" onClick={() => window.open("https://www.youtube.com", "_self")}>
-            Explore Platform
+            Explore Platforms
           </NeonButton>
         </div>
       </div>
