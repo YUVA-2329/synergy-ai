@@ -88,11 +88,11 @@ export function HeroSection({ animateIn = true }: HeroSectionProps) {
         </p>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <NeonButton data-hero="cta" variant="primary" size="lg" onClick={() => window.open("https://www.youtube.com", "_self")}>
+          <NeonButton data-hero="cta" variant="primary" size="lg" onClick={() => window.location.href = "start.html"} >
             Start Analysis
           </NeonButton>
-          <NeonButton data-hero="cta" variant="secondary" size="lg" onClick={() => window.open("https://www.youtube.com", "_self")}>
-            Explore Platforms
+          <NeonButton data-hero="cta" variant="secondary" size="lg" >
+            Explore Platform
           </NeonButton>
         </div>
       </div>
