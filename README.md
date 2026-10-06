@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Synergy AI
 
-## Getting Started
+> An intelligent full-stack AI conversational platform powered by Google GenAI.
 
-First, run the development server:
+### 🌐 Live Demo
+[🚀 OPEN LIVE DEMO →](https://synergy-ai-weld.vercel.app) | [💻 Source Code](https://github.com/YUVA-2329/synergy-ai) 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🎬 Demo & 📸 Screenshots
+
+![Synergy AI Preview](https://via.placeholder.com/800x400?text=Synergy+AI+Preview)
+
+*(Project preview and screenshots demonstrating the core user experience)*
+
+---
+
+## 🧠 About the Project
+
+This project was built to solve real-world challenges through modern web technologies and advanced engineering. By combining scalable architecture with an intuitive user interface, Synergy AI provides an exceptional user experience while maintaining high performance and security.
+
+### ✨ Key Features
+- ⚡ Real-time AI processing
+- 🤖 Google GenAI integration
+- 🎨 Cinematic modern UI with Framer Motion
+- 📱 Fully responsive interface
+- 🗄️ Persistent chat state management
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend:** React, TypeScript, Tailwind CSS, Framer Motion
+**Backend:** Node.js, Express, Vite
+**AI/ML:** Google GenAI API
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+flowchart LR
+  A[User] --> B[React Frontend]
+  B --> C[Express API]
+  C --> D[Google GenAI]
+  D --> C
+  C --> B
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ⚙️ How It Works
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. User enters a query into the chat interface.
+2. The frontend sends the request to the Express backend.
+3. The backend processes the prompt and communicates with the Google GenAI API.
+4. AI response is streamed back to the frontend and rendered in real-time.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Getting Started
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+git clone https://github.com/YUVA-2329/synergy-ai.git
+cd synergy-ai
+npm install
+npm run dev
+```
 
-## Deploy on Vercel
+### Environment Variables
+Create a `.env` file in the root directory:
+```env
+PORT=3000
+GEMINI_API_KEY=YOUR_API_KEY_HERE
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📁 Project Structure
+
+```text
+project/
+├── src/
+│   ├── components/
+│   ├── api/
+│   └── main.tsx
+├── server.ts
+└── package.json
+```
+
+---
+
+## 🛣️ Roadmap
+
+- [x] Core AI chat functionality
+- [x] Responsive UI
+- [ ] Advanced analytics dashboard
+- [ ] Multi-model support
+
+---
+
+## 📊 Status
+
+🟢 Active Development
+
+---
+
+## 👨‍💻 Author
+
+**Yuva Kishore Peta**  
+GitHub: [YUVA-2329](https://github.com/YUVA-2329)
